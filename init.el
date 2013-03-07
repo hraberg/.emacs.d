@@ -31,16 +31,9 @@
 (savehist-mode t)
 (global-auto-revert-mode t)
 (winner-mode 1)
-;; (desktop-save-mode 1)
 (setq split-width-threshold nil)
 (require 'popwin)
 (setq display-buffer-function 'popwin:display-buffer)
-
-(require 'layout-restore)
-(global-set-key [?\C-c ?l] 'layout-save-current)
-(global-set-key [?\C-c ?\C-l ?\C-l] 'layout-restore)
-(global-set-key [?\C-c ?\C-l ?\C-c] 'layout-delete-current)
-(setq layout-restore-after-killbuffer nil)
 
 ;;(global-set-key (kbd "RET") 'newline-and-indent)
 (global-set-key (kbd "C-q") 'delete-other-windows)
@@ -52,7 +45,7 @@
 (global-set-key (kbd "<M-C-left>") 'previous-buffer)
 (global-set-key (kbd "<M-C-right>") 'next-buffer)
 
-(windmove-default-keybindings 'meta)
+(windmove-default-keybindings 'super)
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
 (global-set-key (kbd "M-S-C-<left>") 'shrink-window-horizontally)
@@ -125,33 +118,6 @@
 (add-hook 'slime-mode-hook 'set-up-slime-ac)
 (add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
 
-;; Stub to make Slime-JS run under same Slime as Clojure
-;; (defmacro define-slime-contrib (name _docstring &rest clauses)
-;;   (destructuring-bind (&key slime-dependencies
-;;                             swank-dependencies
-;;                             on-load
-;;                             on-unload
-;;                             gnu-emacs-only
-;;                             authors
-;;                             license)
-;;       (loop for (key . value) in clauses append `(,key ,value))
-;;     (let ((enable (intern (concat (symbol-name name) "-init")))
-;;           (disable (intern (concat (symbol-name name) "-unload"))))
-;;     `(progn
-;;        ,(when gnu-emacs-only
-;;           `(eval-and-compile
-;;              (assert (not (featurep 'xemacs)) ()
-;;                      ,(concat (symbol-name name)
-;;                               " does not work with XEmacs."))))
-;;        ,@(mapcar (lambda (d) `(require ',d)) slime-dependencies)
-;;        (defun ,enable ()
-;;          ,@(mapcar (lambda (d) `(slime-require ',d)) swank-dependencies)
-;;          ,@on-load)
-;;        (defun ,disable ()
-;;          ,@on-unload)))))
-
-;;(require 'slime-js)
-
 ;; Adapted from https://github.com/purcell/emacs.d/blob/master/init-auto-complete.el
 ;; (setq tab-always-indent 'auto-complete)  ;; use 'complete when auto-complete is disabled
 ;; (add-to-list 'completion-styles 'initials t)
@@ -212,6 +178,14 @@
 (show-paren-mode)
 (idle-highlight-mode)
 
+(add-hook 'slime-repl-mode-hook 'durendal-slime-repl-paredit)
+(add-hook 'sldb-mode-hook 'durendal-dim-sldb-font-lock)
+
+(add-hook 'clojure-mode-hook 'paredit-mode)
+(add-hook 'slime-repl-mode-hook 'paredit-mode)
+(add-hook 'nrepl-mode-hook 'paredit-mode)
+(add-hook 'emacs-lisp-mode-hook  'paredit-mode)
+
 (add-hook 'clojure-mode-hook 'highlight-parentheses-mode)
 (add-hook 'slime-repl-mode-hook 'highlight-parentheses-mode)
 (add-hook 'emacs-lisp-mode-hook  'highlight-parentheses-mode)
@@ -230,4 +204,11 @@
 
 (global-set-key [pause] 'toggle-current-window-dedication)
 
-(set-face-attribute 'default (selected-frame) :height 120)
+;(set-face-attribute 'default (selected-frame) :height 120)
+(require 'etags-select)
+(require 'etags-table)
+
+(global-set-key "\M-." 'etags-select-find-tag)
+(global-set-key "\M-," 'pop-tag-mark)
+(setq etags-table-search-up-depth 10)
+(setq etags-select-go-if-unambiguous t)

@@ -4,7 +4,7 @@
 
 
 ;;;### (autoloads nil nil ("auto-complete-config.el" "auto-complete-pkg.el"
-;;;;;;  "auto-complete.el" "fuzzy.el" "popup.el") (20131 21253 104523))
+;;;;;;  "auto-complete.el") (20792 7728 717992))
 
 ;;;***
 
