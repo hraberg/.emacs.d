@@ -1,11 +1,6 @@
-*~
-.\#*
-\#*
-*.elc
-ac-comphist.dat
-auto-save-list
-history
-url
-elpa/archives
-swank
-TAGS
+auto-save-list/
+backups/
+elpa/
+ido.last
+places
+smex-items
