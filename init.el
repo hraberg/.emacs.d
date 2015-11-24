@@ -8,6 +8,7 @@
   (package-install 'use-package))
 
 (eval-when-compile
+  (require 'url-handlers)
   (require 'cl)
   (require 'use-package))
 (require 'diminish)
@@ -52,10 +53,18 @@
 (use-package cider
   :ensure t
   :defer 1
-  :pin melpa-stable)
+  :pin melpa-stable
+  :init (setq cider-prompt-for-symbol nil))
 
 (use-package clojure-mode
   :ensure t)
+
+(use-package markdown-mode
+  :ensure t
+  :mode
+  ("\\.markdown\\'"
+   "\\.md\\'"
+   ("README\\.md\\'" . gfm-mode)))
 
 (use-package expand-region
   :ensure t
