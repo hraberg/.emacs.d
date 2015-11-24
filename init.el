@@ -34,6 +34,7 @@
   (defalias 'yes-or-no-p 'y-or-n-p)
   (prefer-coding-system 'utf-8)
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
+  (global-auto-revert-mode)
   (cua-mode))
 
 (use-package paredit
