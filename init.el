@@ -62,8 +62,8 @@
 (use-package markdown-mode
   :ensure t
   :mode ("\\.markdown\\'"
-          "\\.md\\'"
-          ("README\\.md\\'" . gfm-mode)))
+         "\\.md\\'"
+         ("README\\.md\\'" . gfm-mode)))
 
 (use-package expand-region
   :ensure t
