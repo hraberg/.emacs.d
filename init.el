@@ -51,6 +51,7 @@
 
 (use-package cider
   :ensure t
+  :defer 1
   :pin melpa-stable)
 
 (use-package clojure-mode
