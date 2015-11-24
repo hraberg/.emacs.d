@@ -51,7 +51,6 @@
 
 (use-package cider
   :ensure t
-  :defer t
   :pin melpa-stable)
 
 (use-package clojure-mode
@@ -59,8 +58,8 @@
 
 (use-package expand-region
   :ensure t
-  :bind (("C-." . er/expand-region)
-         ("C-M-." . er/contract-region)))
+  :bind (("C-=" . er/expand-region)
+         ("C-M-=" . er/contract-region)))
 
 (use-package hl-sexp
   :ensure t
