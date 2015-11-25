@@ -53,6 +53,7 @@
 (use-package company
   :ensure t
   :diminish company-mode
+  :bind (("TAB" . company-indent-or-complete-common))
   :config (global-company-mode))
 
 (use-package cider
@@ -94,10 +95,10 @@
 
 (use-package smex
   :ensure t
-  :config (smex-initialize)
   :bind (("M-x" . smex)
          ("M-X" . smex-major-mode-commands)
-         ("C-c C-c M-x" . execute-extended-command)))
+         ("C-c C-c M-x" . execute-extended-command))
+  :config (smex-initialize))
 
 (use-package zenburn-theme
   :ensure t
