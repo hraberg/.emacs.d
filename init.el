@@ -59,7 +59,7 @@
   :ensure t
   :defer 1
   :pin melpa-stable
-  :init (setq cider-prompt-for-symbol nil))
+  :config (setq cider-prompt-for-symbol nil))
 
 (use-package markdown-mode
   :ensure t
