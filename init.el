@@ -83,6 +83,7 @@
 
 (use-package highlight-parentheses
   :ensure t
+  :diminish highlight-parentheses-mode
   :config
   (setq hl-paren-colors
         '("orange1" "yellow1" "greenyellow" "green1"
