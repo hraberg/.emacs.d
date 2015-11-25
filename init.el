@@ -1,10 +1,11 @@
 (setq custom-file "~/.emacs.d/custom.el")
-(load custom-file t)
+(load custom-file :noerror)
 
 (package-initialize)
 
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+(dolist (archive '(("melpa" . "https://melpa.org/packages/")
+                   ("melpa-stable" . "https://stable.melpa.org/packages/")))
+  (add-to-list 'package-archives archive :append))
 
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
@@ -41,13 +42,13 @@
   :ensure t
   :diminish paredit-mode
   :config
-  (add-hook 'clojure-mode-hook 'enable-paredit-mode)
-  (add-hook 'cider-repl-mode-hook 'enable-paredit-mode)
-  (add-hook 'lisp-mode-hook 'enable-paredit-mode)
-  (add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
-  (add-hook 'lisp-interaction-mode-hook 'enable-paredit-mode)
-  (add-hook 'ielm-mode-hook 'enable-paredit-mode)
-  (add-hook 'json-mode-hook 'enable-paredit-mode))
+  (dolist (hook '(clojure-mode-hook
+                  cider-repl-mode-hook
+                  lisp-mode-hook
+                  emacs-lisp-mode-hook
+                  lisp-interaction-mode-hook
+                  json-mode-hook))
+    (add-hook hook 'enable-paredit-mode)))
 
 (use-package company
   :ensure t
@@ -88,7 +89,7 @@
 
 (use-package zenburn-theme
   :ensure t
-  :config (load-theme 'zenburn t))
+  :config (load-theme 'zenburn :no-confirm))
 
 (set-face-attribute 'default nil :height 150)
 (toggle-frame-fullscreen)
