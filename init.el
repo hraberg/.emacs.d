@@ -60,9 +60,6 @@
   :pin melpa-stable
   :init (setq cider-prompt-for-symbol nil))
 
-(use-package clojure-mode
-  :ensure t)
-
 (use-package markdown-mode
   :ensure t
   :mode ("\\.markdown\\'"
