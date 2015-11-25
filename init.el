@@ -11,9 +11,9 @@
   (package-install 'use-package))
 
 (eval-when-compile
-  (require 'url-handlers)
   (require 'cl)
-  (require 'use-package))
+  (require 'use-package)
+  (require 'url-handlers))
 (require 'diminish)
 (require 'bind-key)
 
