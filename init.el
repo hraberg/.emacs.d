@@ -38,6 +38,10 @@
   (global-auto-revert-mode)
   (cua-mode))
 
+(use-package idle-highlight-mode
+  :ensure t
+  :config (add-hook 'prog-mode-hook 'idle-highlight-mode))
+
 (use-package paredit
   :ensure t
   :diminish paredit-mode
