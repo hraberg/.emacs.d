@@ -76,6 +76,14 @@
   :ensure t
   :config (global-hl-sexp-mode))
 
+(use-package highlight-parentheses
+  :ensure t
+  :config
+  (setq hl-paren-colors
+        '("orange1" "yellow1" "greenyellow" "green1"
+          "springgreen1" "cyan1" "slateblue1" "magenta1" "purple"))
+  (add-hook 'prog-mode-hook 'highlight-parentheses-mode))
+
 (use-package browse-kill-ring
   :ensure t
   :config (browse-kill-ring-default-keybindings))
