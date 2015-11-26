@@ -64,7 +64,7 @@
   :config (setq cider-prompt-for-symbol nil))
 
 (use-package elisp-slime-nav
-  :if (= 24 emacs-major-version)
+  :when (= 24 emacs-major-version)
   :config
   (dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
     (add-hook hook 'elisp-slime-nav-mode)))
