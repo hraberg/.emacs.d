@@ -48,12 +48,6 @@
   (delete-selection-mode)
   (cua-mode))
 
-(use-package auto-compile
-  :config
-  (setq auto-compile-display-buffer nil
-        auto-compile-mode-line-counter t)
-  (auto-compile-on-save-mode))
-
 (use-package which-key
   :diminish which-key-mode
   :config
@@ -81,6 +75,7 @@
 
 (use-package tagedit
   :diminish tagedit-mode
+  :defer t
   :config
   (tagedit-add-paredit-like-keybindings)
   (tagedit-add-experimental-features)
@@ -91,7 +86,8 @@
   :bind (("TAB" . company-indent-or-complete-common))
   :config (global-company-mode))
 
-(use-package json-mode)
+(use-package json-mode
+  :defer t)
 
 (use-package cider
   :defer 1
@@ -105,6 +101,7 @@
   (apply 'call-process-shell-command (list "go" nil nil nil "get" package)))
 
 (use-package go-mode
+  :defer t
   :init
   (init/go-get "github.com/rogpeppe/godef")
   (init/go-get "golang.org/x/tools/cmd/goimports")
@@ -116,6 +113,7 @@
              ("M-," . pop-tag-mark)))
 
 (use-package gotest
+  :defer t
   :config
   (bind-keys :map go-test-mode-map
              ("C-c ," . go-test-current-file)
