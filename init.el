@@ -63,11 +63,12 @@
   :config
   (dolist (hook '(clojure-mode-hook
                   cider-repl-mode-hook
-                  lisp-mode-hook
                   emacs-lisp-mode-hook
                   lisp-interaction-mode-hook
                   json-mode-hook))
     (add-hook hook 'enable-paredit-mode)))
+
+(use-package json-mode)
 
 (use-package company
   :diminish company-mode
