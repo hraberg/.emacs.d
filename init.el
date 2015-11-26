@@ -126,7 +126,8 @@
 
 (use-package expand-region
   :bind (("C-=" . er/expand-region)
-         ("C-M-=" . er/contract-region)))
+         ("C-'" . er/expand-region)
+         ("C-M-'" . er/contract-region)))
 
 (use-package idle-highlight-mode
   :config (add-hook 'prog-mode-hook 'idle-highlight-mode))
