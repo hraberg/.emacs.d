@@ -14,6 +14,8 @@
 (eval-when-compile
   (require 'cl)
   (require 'use-package)
+  (when (= 25 emacs-major-version)
+    (require 'url-handlers))
   (setq use-package-always-ensure t))
 (require 'diminish)
 (require 'bind-key)
@@ -56,10 +58,13 @@
 (use-package cider
   :defer 1
   :pin melpa-stable
-  :init (setq tramp-ssh-controlmaster-options "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ControlPersist=no")
+  :init
+  (when (= 24 emacs-major-version)
+    (setq tramp-ssh-controlmaster-options "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ControlPersist=no"))
   :config (setq cider-prompt-for-symbol nil))
 
 (use-package elisp-slime-nav
+  :if (= 24 emacs-major-version)
   :config
   (dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
     (add-hook hook 'elisp-slime-nav-mode)))
