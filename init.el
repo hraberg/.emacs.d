@@ -26,6 +26,11 @@
   (add-hook 'text-mode-hook 'flyspell-mode)
   (add-hook 'prog-mode-hook 'flyspell-prog-mode))
 
+(use-package eldoc
+  :diminish eldoc-mode
+  :config
+  (add-hook 'prog-mode-hook 'eldoc-mode))
+
 (use-package better-defaults
   :config
   (setq inhibit-splash-screen t
