@@ -1,7 +1,12 @@
+(eval-when-compile
+  (require 'cl))
+
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file :noerror)
 
 (package-initialize)
+(when (= 25 emacs-major-version)
+  (require 'url-handlers))
 
 (dolist (archive '(("melpa" . "https://melpa.org/packages/")
                    ("melpa-stable" . "https://stable.melpa.org/packages/")))
@@ -11,14 +16,9 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-(eval-when-compile
-  (require 'cl)
-  (require 'use-package)
-  (when (= 25 emacs-major-version)
-    (require 'url-handlers))
-  (setq use-package-always-ensure t))
-(require 'diminish)
-(require 'bind-key)
+(require 'use-package)
+(setq use-package-always-ensure t
+      use-package-verbose t)
 
 (use-package flyspell
   :diminish flyspell-mode
@@ -44,6 +44,12 @@
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
   (global-auto-revert-mode)
   (cua-mode))
+
+(use-package auto-compile
+  :config
+  (setq auto-compile-display-buffer nil
+        auto-compile-mode-line-counter t)
+  (auto-compile-on-save-mode))
 
 (use-package which-key
   :diminish which-key-mode
@@ -76,7 +82,7 @@
   :config (setq cider-prompt-for-symbol nil))
 
 (defun init/go-get (package)
-  (call-process-shell-command "go" nil nil nil "get" package))
+  (apply 'call-process-shell-command (list "go" nil nil nil "get" package)))
 
 (use-package go-mode
   :bind (("M-." . godef-jump)
@@ -88,19 +94,22 @@
   (setq gofmt-command "goimports")
   (add-hook 'before-save-hook 'gofmt-before-save))
 
-(use-package go-eldoc
-  :config
-  (add-hook 'go-mode-hook 'go-eldoc-setup))
-
 (use-package gotest
   :bind (("C-c ," . go-test-current-file)
          ("C-c C-," . go-test-current-file)))
 
+(use-package go-eldoc
+  :defer t
+  :config
+  (add-hook 'go-mode-hook 'go-eldoc-setup))
+
 (use-package company-go
+  :defer t
   :init
   (init/go-get "github.com/nsf/gocode"))
 
 (use-package flycheck
+  :defer t
   :config
   (add-hook 'go-mode-hook 'flycheck-mode))
 
