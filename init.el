@@ -35,7 +35,9 @@
         use-dialog-box nil
         make-backup-files nil
         visible-bell nil
-        auto-revert-interval 1)
+        auto-revert-interval 1
+        confirm-nonexistent-file-or-buffer nil
+        ido-create-new-buffer 'always)
 
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
   (defalias 'yes-or-no-p 'y-or-n-p)
