@@ -35,8 +35,7 @@
   :config
   (setq inhibit-splash-screen t
         column-number-mode t
-        global-font-lock-mode
-        use-dialog-box nilt
+        use-dialog-box nil
         make-backup-files nil
         visible-bell nil)
 
@@ -76,15 +75,15 @@
     (setq tramp-ssh-controlmaster-options "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ControlPersist=no"))
   :config (setq cider-prompt-for-symbol nil))
 
-(defun go-get (package)
+(defun init/go-get (package)
   (call-process-shell-command "go" nil nil nil "get" package))
 
 (use-package go-mode
   :bind (("M-." . godef-jump)
          ("M-," . pop-tag-mark))
   :init
-  (go-get "github.com/rogpeppe/godef")
-  (go-get "golang.org/x/tools/cmd/goimports")
+  (init/go-get "github.com/rogpeppe/godef")
+  (init/go-get "golang.org/x/tools/cmd/goimports")
   :config
   (setq gofmt-command "goimports")
   (add-hook 'before-save-hook 'gofmt-before-save))
@@ -99,7 +98,7 @@
 
 (use-package company-go
   :init
-  (go-get "github.com/nsf/gocode"))
+  (init/go-get "github.com/nsf/gocode"))
 
 (use-package flycheck
   :config
