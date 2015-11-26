@@ -1,5 +1,4 @@
-(eval-when-compile
-  (require 'cl))
+(eval-when-compile (require 'cl))
 
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file :noerror)
