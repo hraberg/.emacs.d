@@ -4,6 +4,6 @@ elpa/
 ido.last
 places
 smex-items
-init.elc
+*.elc
 tramp
 custom.el

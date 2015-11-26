@@ -35,7 +35,8 @@
   (setq inhibit-splash-screen t
         use-dialog-box nil
         make-backup-files nil
-        visible-bell nil)
+        visible-bell nil
+        auto-revert-interval 1)
 
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
   (defalias 'yes-or-no-p 'y-or-n-p)
