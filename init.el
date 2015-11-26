@@ -76,6 +76,12 @@
   :diminish paredit-everywhere-mode
   :config (add-hook 'prog-mode-hook 'paredit-everywhere-mode))
 
+(use-package tagedit
+  :diminish tagedit-mode
+  :config
+  (tagedit-add-paredit-like-keybindings)
+  (add-hook 'sgml-mode-hook 'tagedit-mode))
+
 (use-package company
   :diminish company-mode
   :bind (("TAB" . company-indent-or-complete-common))
@@ -119,6 +125,11 @@
   :defer t
   :init (init/go-get "github.com/nsf/gocode"))
 
+(use-package markdown-mode
+  :mode ("\\.markdown\\'"
+         "\\.md\\'"
+         ("README\\.md\\'" . gfm-mode)))
+
 (use-package flycheck
   :config (global-flycheck-mode))
 
@@ -128,11 +139,6 @@
   :config
   (dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
     (add-hook hook 'elisp-slime-nav-mode)))
-
-(use-package markdown-mode
-  :mode ("\\.markdown\\'"
-         "\\.md\\'"
-         ("README\\.md\\'" . gfm-mode)))
 
 (use-package expand-region
   :bind (("C-=" . er/expand-region)
