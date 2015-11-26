@@ -35,7 +35,8 @@
   :config
   (setq inhibit-splash-screen t
         column-number-mode t
-        global-font-lock-mode t
+        global-font-lock-mode
+        use-dialog-box nilt
         make-backup-files nil
         visible-bell nil)
 
