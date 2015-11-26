@@ -80,6 +80,7 @@
   :diminish tagedit-mode
   :config
   (tagedit-add-paredit-like-keybindings)
+  (tagedit-add-experimental-features)
   (add-hook 'sgml-mode-hook 'tagedit-mode))
 
 (use-package company
