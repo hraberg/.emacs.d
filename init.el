@@ -39,6 +39,11 @@
   (global-auto-revert-mode)
   (cua-mode))
 
+(use-package which-key
+  :config
+  (setq which-key-idle-delay 2.0)
+  (which-key-mode))
+
 (use-package paredit
   :diminish paredit-mode
   :config
