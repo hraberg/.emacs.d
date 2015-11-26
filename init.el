@@ -40,6 +40,7 @@
   (cua-mode))
 
 (use-package which-key
+  :diminish which-key-mode
   :config
   (setq which-key-idle-delay 2.0)
   (which-key-mode))
@@ -70,6 +71,7 @@
 
 (use-package elisp-slime-nav
   :when (= 24 emacs-major-version)
+  :diminish elisp-slime-nav-mode
   :config
   (dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
     (add-hook hook 'elisp-slime-nav-mode)))
