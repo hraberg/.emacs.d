@@ -68,12 +68,16 @@
                   json-mode-hook))
     (add-hook hook 'enable-paredit-mode)))
 
-(use-package json-mode)
+(use-package paredit-everywhere
+  :diminish paredit-everywhere-mode
+  :config (add-hook 'prog-mode-hook 'paredit-everywhere-mode))
 
 (use-package company
   :diminish company-mode
   :bind (("TAB" . company-indent-or-complete-common))
   :config (global-company-mode))
+
+(use-package json-mode)
 
 (use-package cider
   :defer 1
