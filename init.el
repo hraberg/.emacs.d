@@ -56,6 +56,7 @@
 (use-package cider
   :defer 1
   :pin melpa-stable
+  :init (setq tramp-ssh-controlmaster-options "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ControlPersist=no")
   :config (setq cider-prompt-for-symbol nil))
 
 (use-package markdown-mode
