@@ -86,18 +86,21 @@
   (apply 'call-process-shell-command (list "go" nil nil nil "get" package)))
 
 (use-package go-mode
-  :bind (("M-." . godef-jump)
-         ("M-," . pop-tag-mark))
   :init
   (init/go-get "github.com/rogpeppe/godef")
   (init/go-get "golang.org/x/tools/cmd/goimports")
   :config
   (setq gofmt-command "goimports")
-  (add-hook 'before-save-hook 'gofmt-before-save))
+  (add-hook 'before-save-hook 'gofmt-before-save)
+  (bind-keys :map go-mode-map
+             ("M-." . godef-jump)
+             ("M-," . pop-tag-mark)))
 
 (use-package gotest
-  :bind (("C-c ," . go-test-current-file)
-         ("C-c C-," . go-test-current-file)))
+  :config
+  (bind-keys :map go-test-mode-map
+             ("C-c ," . go-test-current-file)
+             ("C-c C-," . go-test-current-file)))
 
 (use-package go-eldoc
   :defer t
