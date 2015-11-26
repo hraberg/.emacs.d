@@ -67,6 +67,9 @@
                   cider-repl-mode-hook
                   emacs-lisp-mode-hook
                   lisp-interaction-mode-hook
+                  lisp-mode-hook
+                  scheme-mode-hook
+                  ielm-mode-hook
                   css-mode
                   js-mode
                   json-mode-hook))
