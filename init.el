@@ -65,6 +65,8 @@
                   cider-repl-mode-hook
                   emacs-lisp-mode-hook
                   lisp-interaction-mode-hook
+                  css-mode
+                  js-mode
                   json-mode-hook))
     (add-hook hook 'enable-paredit-mode)))
 
@@ -116,8 +118,7 @@
   :init (init/go-get "github.com/nsf/gocode"))
 
 (use-package flycheck
-  :defer t
-  :config (add-hook 'go-mode-hook 'flycheck-mode))
+  :config (global-flycheck-mode))
 
 (use-package elisp-slime-nav
   :when (= 24 emacs-major-version)
