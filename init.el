@@ -33,15 +33,17 @@
 (use-package better-defaults
   :config
   (setq inhibit-splash-screen t
-        column-number-mode t
         use-dialog-box nil
         make-backup-files nil
         visible-bell nil)
 
+  (add-hook 'before-save-hook 'delete-trailing-whitespace)
   (defalias 'yes-or-no-p 'y-or-n-p)
   (prefer-coding-system 'utf-8)
-  (add-hook 'before-save-hook 'delete-trailing-whitespace)
+
   (global-auto-revert-mode)
+  (column-number-mode)
+  (delete-selection-mode)
   (cua-mode))
 
 (use-package auto-compile
