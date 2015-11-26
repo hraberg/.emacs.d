@@ -36,6 +36,7 @@
   (setq inhibit-splash-screen t
         column-number-mode t
         global-font-lock-mode t
+        make-backup-files nil
         visible-bell nil)
 
   (defalias 'yes-or-no-p 'y-or-n-p)
