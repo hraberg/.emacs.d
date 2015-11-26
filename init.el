@@ -27,8 +27,7 @@
 
 (use-package eldoc
   :diminish eldoc-mode
-  :config
-  (add-hook 'prog-mode-hook 'eldoc-mode))
+  :config (add-hook 'prog-mode-hook 'eldoc-mode))
 
 (use-package better-defaults
   :config
@@ -102,18 +101,15 @@
 
 (use-package go-eldoc
   :defer t
-  :config
-  (add-hook 'go-mode-hook 'go-eldoc-setup))
+  :config (add-hook 'go-mode-hook 'go-eldoc-setup))
 
 (use-package company-go
   :defer t
-  :init
-  (init/go-get "github.com/nsf/gocode"))
+  :init (init/go-get "github.com/nsf/gocode"))
 
 (use-package flycheck
   :defer t
-  :config
-  (add-hook 'go-mode-hook 'flycheck-mode))
+  :config (add-hook 'go-mode-hook 'flycheck-mode))
 
 (use-package elisp-slime-nav
   :when (= 24 emacs-major-version)
