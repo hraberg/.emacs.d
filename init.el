@@ -9,7 +9,7 @@
 
 (eval-when-compile (require 'cl))
 
-(setq custom-file "~/.emacs.d/custom.el"
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory)
       inhibit-splash-screen t
       use-dialog-box nil
       make-backup-files nil
