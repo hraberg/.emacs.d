@@ -28,11 +28,10 @@
 (package-initialize)
 
 (eval-and-compile
-  (when (= 25 emacs-major-version)
-    (require 'url-handlers))
-
-  (when (= 24 emacs-major-version)
-    (eval '(setq tramp-ssh-controlmaster-options "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ControlPersist=no")))
+  (case emacs-major-version
+    (24 (setq-default tramp-ssh-controlmaster-options
+                      "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ControlPersist=no"))
+    (25 (require 'url-handlers)))
 
   (dolist (archive '(("melpa" . "https://melpa.org/packages/")
                      ("melpa-stable" . "https://stable.melpa.org/packages/")))
