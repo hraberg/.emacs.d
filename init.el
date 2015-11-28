@@ -118,8 +118,9 @@
 (use-package go-mode
   :defer t
   :init
-  (init/go-get "github.com/rogpeppe/godef")
-  (init/go-get "golang.org/x/tools/cmd/goimports")
+  (dolist (package '("github.com/rogpeppe/godef"
+                     "golang.org/x/tools/cmd/goimports"))
+    (init/go-get package))
   :config
   (setq gofmt-command "goimports")
   (add-hook 'before-save-hook 'gofmt-before-save)
