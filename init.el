@@ -1,7 +1,20 @@
 (eval-when-compile (require 'cl))
 
-(setq custom-file "~/.emacs.d/custom.el")
+(setq custom-file "~/.emacs.d/custom.el"
+      inhibit-splash-screen t
+      use-dialog-box nil
+      make-backup-files nil
+      confirm-nonexistent-file-or-buffer nil
+      ido-create-new-buffer 'always)
+
 (load custom-file :noerror)
+
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+(defalias 'yes-or-no-p 'y-or-n-p)
+
+(column-number-mode)
+(delete-selection-mode)
+(cua-mode)
 
 (package-initialize)
 (when (= 25 emacs-major-version)
@@ -19,6 +32,11 @@
 (setq use-package-always-ensure t
       use-package-verbose t)
 
+(use-package autorevert
+  :config
+  (global-auto-revert-mode)
+  (setq auto-revert-interval 1))
+
 (use-package flyspell
   :diminish flyspell-mode
   :config
@@ -30,23 +48,7 @@
   :config (add-hook 'prog-mode-hook 'eldoc-mode))
 
 (use-package better-defaults
-  :config
-  (setq inhibit-splash-screen t
-        use-dialog-box nil
-        make-backup-files nil
-        visible-bell nil
-        auto-revert-interval 1
-        confirm-nonexistent-file-or-buffer nil
-        ido-create-new-buffer 'always)
-
-  (add-hook 'before-save-hook 'delete-trailing-whitespace)
-  (defalias 'yes-or-no-p 'y-or-n-p)
-  (prefer-coding-system 'utf-8)
-
-  (global-auto-revert-mode)
-  (column-number-mode)
-  (delete-selection-mode)
-  (cua-mode))
+  :config (setq visible-bell nil))
 
 (use-package which-key
   :diminish which-key-mode
