@@ -113,7 +113,7 @@
 
 (defun init/go-get (package)
   "Use `go get' to install Go package PACKAGE."
-  (apply 'call-process-shell-command (list "go" nil nil nil "get" package)))
+  (call-process "go" nil nil nil "get" package))
 
 (use-package go-mode
   :defer t
