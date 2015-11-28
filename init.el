@@ -44,8 +44,8 @@
 
 (use-package autorevert
   :config
-  (global-auto-revert-mode)
-  (setq auto-revert-interval 1))
+  (setq auto-revert-interval 1)
+  (global-auto-revert-mode))
 
 (use-package cua-base
   :config (cua-mode))
