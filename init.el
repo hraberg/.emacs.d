@@ -91,9 +91,7 @@
 
 (use-package tagedit
   :diminish tagedit-mode
-  :init
-  (eval-when-compile
-    (defun te/maybe-expand-tag ()))
+  :init (eval-when-compile (defun te/maybe-expand-tag ()))
   :config
   (tagedit-add-paredit-like-keybindings)
   (tagedit-add-experimental-features)
@@ -110,9 +108,7 @@
 (use-package cider
   :pin melpa-stable
   :defer 1
-  :init
-  (eval-when-compile
-    (defun org-bookmark-jump-unhide ()))
+  :init (eval-when-compile (defun org-bookmark-jump-unhide ()))
   :config (setq cider-prompt-for-symbol nil))
 
 (defun init/go-get (package)
