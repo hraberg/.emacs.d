@@ -1,3 +1,12 @@
+;;; init.el --- Håkan Råberg's Emacs configuration.
+
+;;; Commentary:
+
+;; This is my portable .emacs.d which uses use-package.
+;; Tested with Emacs 24.5.1 on Linux.
+
+;;; Code:
+
 (eval-when-compile (require 'cl))
 
 (setq custom-file "~/.emacs.d/custom.el"
@@ -17,12 +26,17 @@
 (cua-mode)
 
 (package-initialize)
-(when (= 25 emacs-major-version)
-  (require 'url-handlers))
 
-(dolist (archive '(("melpa" . "https://melpa.org/packages/")
-                   ("melpa-stable" . "https://stable.melpa.org/packages/")))
-  (add-to-list 'package-archives archive :append))
+(eval-and-compile
+  (when (= 25 emacs-major-version)
+    (require 'url-handlers))
+
+  (when (= 24 emacs-major-version)
+    (eval '(setq tramp-ssh-controlmaster-options "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ControlPersist=no")))
+
+  (dolist (archive '(("melpa" . "https://melpa.org/packages/")
+                     ("melpa-stable" . "https://stable.melpa.org/packages/")))
+    (add-to-list 'package-archives archive :append)))
 
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
@@ -77,7 +91,9 @@
 
 (use-package tagedit
   :diminish tagedit-mode
-  :defer t
+  :init
+  (eval-when-compile
+    (defun te/maybe-expand-tag ()))
   :config
   (tagedit-add-paredit-like-keybindings)
   (tagedit-add-experimental-features)
@@ -92,14 +108,15 @@
   :defer t)
 
 (use-package cider
-  :defer 1
   :pin melpa-stable
+  :defer 1
   :init
-  (when (= 24 emacs-major-version)
-    (setq tramp-ssh-controlmaster-options "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ControlPersist=no"))
+  (eval-when-compile
+    (defun org-bookmark-jump-unhide ()))
   :config (setq cider-prompt-for-symbol nil))
 
 (defun init/go-get (package)
+  "Use `go get' to install Go package PACKAGE."
   (apply 'call-process-shell-command (list "go" nil nil nil "get" package)))
 
 (use-package go-mode
@@ -177,3 +194,7 @@
 
 (set-face-attribute 'default nil :height 150)
 (toggle-frame-fullscreen)
+
+(provide 'init)
+
+;;; init.el ends here

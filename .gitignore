@@ -7,3 +7,4 @@ smex-items
 *.elc
 tramp
 custom.el
+flycheck_*
