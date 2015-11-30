@@ -192,10 +192,11 @@
 (use-package zenburn-theme
   :config (load-theme 'zenburn :no-confirm))
 
-(set-face-attribute 'default nil :height 150)
-(set-face-attribute 'mode-line nil :box nil)
-(set-face-attribute 'mode-line-inactive nil :box nil)
+(set-face-attribute 'mode-line nil :box)
+(set-face-attribute 'mode-line-inactive nil :box)
 (set-face-attribute 'vertical-border nil :foreground "#444")
+(set-face-attribute 'default nil :height 150)
+
 (fringe-mode '(4 . 0))
 (toggle-frame-fullscreen)
 
