@@ -180,6 +180,9 @@
 (use-package browse-kill-ring
   :config (browse-kill-ring-default-keybindings))
 
+(use-package diff-hl
+  :config (global-diff-hl-mode))
+
 (use-package smex
   :bind (("M-x" . smex)
          ("M-X" . smex-major-mode-commands)
