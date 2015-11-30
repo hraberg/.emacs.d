@@ -195,6 +195,7 @@
 (set-face-attribute 'default nil :height 150)
 (set-face-attribute 'mode-line nil :box nil)
 (set-face-attribute 'mode-line-inactive nil :box nil)
+(set-face-attribute 'vertical-border nil :foreground "#444")
 (fringe-mode '(4 . 0))
 (toggle-frame-fullscreen)
 
