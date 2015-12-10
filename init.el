@@ -109,7 +109,8 @@
   :pin melpa-stable
   :defer 1
   :init (eval-when-compile (defun org-bookmark-jump-unhide ()))
-  :config (setq cider-prompt-for-symbol nil))
+  :config (setq cider-prompt-for-symbol nil
+                cider-prompt-for-project-on-connect nil))
 
 (defun init/go-get (package)
   "Use `go get' to install Go package PACKAGE."
