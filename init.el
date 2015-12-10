@@ -100,7 +100,9 @@
 (use-package company
   :diminish company-mode
   :bind (("TAB" . company-indent-or-complete-common))
-  :config (global-company-mode))
+  :config
+  (setq company-idle-delay nil)
+  (global-company-mode))
 
 (use-package json-mode
   :defer t)
