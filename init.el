@@ -57,6 +57,9 @@
   :diminish eldoc-mode
   :config (add-hook 'prog-mode-hook 'eldoc-mode))
 
+(use-package elec-pair
+  :config (electric-pair-mode))
+
 (use-package flyspell
   :diminish flyspell-mode
   :config
@@ -106,10 +109,7 @@
   :init (eval-when-compile (defun org-bookmark-jump-unhide ()))
   :config
   (setq cider-prompt-for-symbol nil
-        cider-prompt-for-project-on-connect nil)
-  (bind-keys :map cider-repl-mode-map
-             ("{" . paredit-open-curly)
-             ("}" . paredit-close-curly)))
+        cider-prompt-for-project-on-connect nil))
 
 (use-package auto-complete
   :diminish auto-complete-mode
