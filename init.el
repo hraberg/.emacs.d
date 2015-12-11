@@ -97,18 +97,12 @@
   (tagedit-add-experimental-features)
   (add-hook 'sgml-mode-hook 'tagedit-mode))
 
-(use-package company
-  :diminish company-mode
-  :bind (("TAB" . company-indent-or-complete-common))
-  :config
-  (setq company-idle-delay nil)
-  (global-company-mode))
-
 (use-package json-mode
   :defer t)
 
 (use-package cider
   :pin melpa-stable
+  :defer 1
   :init (eval-when-compile (defun org-bookmark-jump-unhide ()))
   :config
   (setq cider-prompt-for-symbol nil
@@ -116,6 +110,21 @@
   (bind-keys :map cider-repl-mode-map
              ("{" . paredit-open-curly)
              ("}" . paredit-close-curly)))
+
+(use-package auto-complete
+  :diminish auto-complete-mode
+  :config
+  (ac-config-default)
+  (eval '(progn (ac-set-trigger-key "TAB")
+                (ac-flyspell-workaround)))
+  (setq ac-auto-start nil))
+
+(use-package ac-cider
+  :config
+  (dolist (hook '(cider-mode-hook cider-repl-mode-hook))
+    (add-hook hook 'ac-cider-setup))
+  (dolist (mode '(cider-mode cider-repl-mode))
+    (add-to-list 'ac-modes mode)))
 
 (defun init/go-get (package)
   "Use `go get' to install Go package PACKAGE."
@@ -145,7 +154,7 @@
   :defer t
   :config (add-hook 'go-mode-hook 'go-eldoc-setup))
 
-(use-package company-go
+(use-package go-autocomplete
   :defer t
   :init (init/go-get "github.com/nsf/gocode"))
 
