@@ -109,7 +109,9 @@
   :init (eval-when-compile (defun org-bookmark-jump-unhide ()))
   :config
   (setq cider-prompt-for-symbol nil
-        cider-prompt-for-project-on-connect nil))
+        cider-prompt-for-project-on-connect nil)
+  (bind-keys :map cider-repl-mode-map
+             ("C-c M-o" . cider-repl-clear-buffer)))
 
 (use-package auto-complete
   :diminish auto-complete-mode
