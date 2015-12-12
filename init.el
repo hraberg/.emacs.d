@@ -83,6 +83,14 @@
              ("s-F" . projectile-find-file)
              ("s-G" . projectile-grep)))
 
+(use-package auto-complete
+  :diminish auto-complete-mode
+  :config
+  (ac-config-default)
+  (eval '(progn (ac-set-trigger-key "TAB")
+                (ac-flyspell-workaround)))
+  (setq ac-auto-start nil))
+
 (use-package paredit
   :diminish paredit-mode
   :config
@@ -102,37 +110,35 @@
   :diminish paredit-everywhere-mode
   :config (add-hook 'prog-mode-hook 'paredit-everywhere-mode))
 
+(eval-when-compile (defun te/maybe-expand-tag ()))
+
 (use-package tagedit
+  :defer t
   :diminish tagedit-mode
-  :init (eval-when-compile (defun te/maybe-expand-tag ()))
+  :commands tagedit-mode
+  :init
+  (add-hook 'sgml-mode-hook 'tagedit-mode)
   :config
   (tagedit-add-paredit-like-keybindings)
-  (tagedit-add-experimental-features)
-  (add-hook 'sgml-mode-hook 'tagedit-mode))
+  (tagedit-add-experimental-features))
 
 (use-package json-mode
   :defer t)
 
+(eval-when-compile (defun org-bookmark-jump-unhide ()))
+
 (use-package cider
   :pin melpa-stable
   :defer 1
-  :init (eval-when-compile (defun org-bookmark-jump-unhide ()))
   :config
   (setq cider-prompt-for-symbol nil
         cider-prompt-for-project-on-connect nil)
   (bind-keys :map cider-repl-mode-map
              ("C-c M-o" . cider-repl-clear-buffer)))
 
-(use-package auto-complete
-  :diminish auto-complete-mode
-  :config
-  (ac-config-default)
-  (eval '(progn (ac-set-trigger-key "TAB")
-                (ac-flyspell-workaround)))
-  (setq ac-auto-start nil))
-
 (use-package ac-cider
-  :config
+  :defer t
+  :init
   (dolist (hook '(cider-mode-hook cider-repl-mode-hook))
     (add-hook hook 'ac-cider-setup))
   (dolist (mode '(cider-mode cider-repl-mode))
@@ -164,7 +170,7 @@
 
 (use-package go-eldoc
   :defer t
-  :config (add-hook 'go-mode-hook 'go-eldoc-setup))
+  :init (add-hook 'go-mode-hook 'go-eldoc-setup))
 
 (use-package go-autocomplete
   :defer t
