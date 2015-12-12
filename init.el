@@ -73,6 +73,16 @@
   :diminish which-key-mode
   :config (which-key-mode))
 
+(use-package projectile
+  :diminish projectile-mode
+  :config
+  (projectile-global-mode)
+  (bind-keys :map projectile-mode-map
+             ("s-D" . projectile-find-dir)
+             ("s-P" . projectile-switch-project)
+             ("s-F" . projectile-find-file)
+             ("s-G" . projectile-grep)))
+
 (use-package paredit
   :diminish paredit-mode
   :config
