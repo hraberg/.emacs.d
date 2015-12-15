@@ -30,9 +30,7 @@
                       "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ControlPersist=no"))
     (25 (require 'url-handlers)))
 
-  (dolist (archive '(("melpa" . "https://melpa.org/packages/")
-                     ("melpa-stable" . "https://stable.melpa.org/packages/")))
-    (add-to-list 'package-archives archive :append)))
+  (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") :append))
 
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
@@ -128,7 +126,6 @@
 (eval-when-compile (defun org-bookmark-jump-unhide ()))
 
 (use-package cider
-  :pin melpa-stable
   :defer 1
   :config
   (setq cider-prompt-for-symbol nil
