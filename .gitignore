@@ -8,3 +8,5 @@ smex-items
 tramp
 custom.el
 flycheck_*
+ac-comphist.dat
+projectile-bookmarks.eld
