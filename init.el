@@ -120,6 +120,10 @@
   (tagedit-add-paredit-like-keybindings)
   (tagedit-add-experimental-features))
 
+(use-package scss-mode
+  :defer t
+  :config (setq scss-compile-at-save nil))
+
 (use-package json-mode
   :defer t)
 
