@@ -67,10 +67,6 @@
 (use-package better-defaults
   :config (setq visible-bell nil))
 
-(use-package which-key
-  :diminish which-key-mode
-  :config (which-key-mode))
-
 (use-package projectile
   :diminish projectile-mode
   :config
@@ -235,6 +231,7 @@
 (set-face-attribute 'mode-line-inactive nil :box)
 (set-face-attribute 'vertical-border nil :foreground "#444")
 (set-face-attribute 'default nil :height 150)
+(set-face-attribute 'hl-sexp-face nil :background "#383838")
 
 (fringe-mode '(4 . 0))
 (toggle-frame-fullscreen)
