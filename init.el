@@ -193,13 +193,9 @@
          ("C-'" . er/expand-region)
          ("C-M-'" . er/contract-region)))
 
-(use-package highlight-symbol
-  :diminish highlight-symbol-mode
-  :config
-  (dolist (mode '(highlight-symbol-mode highlight-symbol-nav-mode))
-    (add-hook 'prog-mode-hook mode))
-  (setq highlight-symbol-idle-delay 0.5)
-  (set-face-attribute 'highlight-symbol-face nil :background "#2b2b2b"))
+(use-package idle-highlight-mode
+  :diminish idle-highlight-mode
+  :config (add-hook 'prog-mode-hook 'idle-highlight-mode))
 
 (use-package hl-sexp
   :config (global-hl-sexp-mode))
