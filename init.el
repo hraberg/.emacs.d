@@ -64,6 +64,9 @@
   (add-hook 'text-mode-hook 'flyspell-mode)
   (add-hook 'prog-mode-hook 'flyspell-prog-mode))
 
+(use-package asm-mode
+  :config (setq asm-comment-char ?#))
+
 (use-package better-defaults
   :config (setq visible-bell nil))
 
