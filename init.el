@@ -126,6 +126,10 @@
 (use-package json-mode
   :defer t)
 
+(use-package scheme
+  :defer t
+  :config (setq scheme-program-name "~/dev/akeem/akeem"))
+
 (eval-when-compile (defun org-bookmark-jump-unhide ()))
 
 (use-package cider
