@@ -19,6 +19,7 @@
 (load custom-file :noerror)
 
 (column-number-mode)
+(electric-pair-mode)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 (defalias 'yes-or-no-p 'y-or-n-p)
 
@@ -54,9 +55,6 @@
 (use-package eldoc
   :diminish eldoc-mode
   :config (add-hook 'prog-mode-hook 'eldoc-mode))
-
-(use-package elec-pair
-  :config (electric-pair-mode))
 
 (use-package flyspell
   :diminish flyspell-mode
@@ -237,11 +235,14 @@
 (set-face-attribute 'mode-line nil :box)
 (set-face-attribute 'mode-line-inactive nil :box)
 (set-face-attribute 'vertical-border nil :foreground "#444")
-(set-face-attribute 'default nil :height 150)
+(set-face-attribute 'default nil :height
+                    (if (= 3200 (x-display-pixel-width)) 120 150))
 (set-face-attribute 'hl-sexp-face nil :background "#383838")
 
+
 (fringe-mode '(4 . 0))
-(toggle-frame-fullscreen)
+(when (fboundp 'toggle-frame-fullscreen)
+  (toggle-frame-fullscreen))
 
 (provide 'init)
 
