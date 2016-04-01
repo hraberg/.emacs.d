@@ -3,7 +3,7 @@
 ;;; Commentary:
 
 ;; This is my portable .emacs.d which uses use-package.
-;; Tested with Emacs 24.5.1 on Linux.
+;; Tested with Emacs 24.3.1 and 24.5.1 on Linux.
 
 ;;; Code:
 
@@ -132,8 +132,6 @@
     (put r7rs-macro 'scheme-indent-function 1))
   (setq scheme-program-name "~/dev/akeem/akeem"))
 
-(eval-when-compile (defun org-bookmark-jump-unhide ()))
-
 (use-package cider
   :defer 1
   :config
@@ -232,13 +230,13 @@
 (use-package zenburn-theme
   :config (load-theme 'zenburn :no-confirm))
 
+(when (equal 'x window-system)
+  (set-face-attribute 'default nil :height
+                      (if (= 3200 (x-display-pixel-width)) 120 150)))
 (set-face-attribute 'mode-line nil :box)
 (set-face-attribute 'mode-line-inactive nil :box)
 (set-face-attribute 'vertical-border nil :foreground "#444")
-(set-face-attribute 'default nil :height
-                    (if (= 3200 (x-display-pixel-width)) 120 150))
 (set-face-attribute 'hl-sexp-face nil :background "#383838")
-
 
 (fringe-mode '(4 . 0))
 (when (fboundp 'toggle-frame-fullscreen)
