@@ -130,6 +130,7 @@
   (dolist (r7rs-macro '(when unless))
     (font-lock-add-keywords 'scheme-mode `((,(symbol-name r7rs-macro) . font-lock-keyword-face)))
     (put r7rs-macro 'scheme-indent-function 1))
+  (font-lock-add-keywords 'scheme-mode '(("case-lambda" . font-lock-keyword-face)))
   (setq scheme-program-name "~/dev/akeem/akeem"))
 
 (use-package cider
@@ -226,6 +227,8 @@
          ("M-X" . smex-major-mode-commands)
          ("C-c C-c M-x" . execute-extended-command))
   :config (smex-initialize))
+
+(use-package dockerfile-mode)
 
 (use-package zenburn-theme
   :config (load-theme 'zenburn :no-confirm))
