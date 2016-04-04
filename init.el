@@ -127,7 +127,7 @@
 (use-package scheme
   :defer t
   :config
-  (dolist (r7rs-macro '(when unless))
+  (dolist (r7rs-macro '(when unless guard parameterize))
     (font-lock-add-keywords 'scheme-mode `((,(symbol-name r7rs-macro) . font-lock-keyword-face)))
     (put r7rs-macro 'scheme-indent-function 1))
   (font-lock-add-keywords 'scheme-mode '(("case-lambda" . font-lock-keyword-face)))
