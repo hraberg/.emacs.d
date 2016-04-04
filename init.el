@@ -131,6 +131,7 @@
     (font-lock-add-keywords 'scheme-mode `((,(symbol-name r7rs-macro) . font-lock-keyword-face)))
     (put r7rs-macro 'scheme-indent-function 1))
   (font-lock-add-keywords 'scheme-mode '(("case-lambda" . font-lock-keyword-face)))
+  (put 'dynamic-wind 'scheme-indent-function 0)
   (setq scheme-program-name "~/dev/akeem/akeem"))
 
 (use-package cider
