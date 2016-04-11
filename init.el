@@ -231,9 +231,7 @@
 
 (use-package dockerfile-mode)
 
-(let ((local-init (expand-file-name "local-init.el" user-emacs-directory)))
-  (when (file-exists-p local-init)
-    (load local-init)))
+(load (expand-file-name "local-init.el" user-emacs-directory) :noerror)
 
 (use-package zenburn-theme
   :config (load-theme 'zenburn :no-confirm))
