@@ -231,6 +231,13 @@
 
 (use-package dockerfile-mode)
 
+(use-package el-get
+  :config
+  (let ((el-get-local-recipes (expand-file-name "el-get/recipes" user-emacs-directory)))
+    (make-directory el-get-local-recipes :parents)
+    (add-to-list 'el-get-recipe-path el-get-local-recipes)
+    (el-get :sync)))
+
 (load (expand-file-name "local-init.el" user-emacs-directory) :noerror)
 
 (use-package zenburn-theme

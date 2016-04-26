@@ -11,3 +11,4 @@ local-init.el
 flycheck_*
 ac-comphist.dat
 projectile-bookmarks.eld
+el-get/
