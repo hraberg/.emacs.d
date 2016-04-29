@@ -138,7 +138,8 @@
   :defer 1
   :config
   (setq cider-prompt-for-symbol nil
-        cider-prompt-for-project-on-connect nil)
+        cider-prompt-for-project-on-connect nil
+        cider-repl-display-help-banner nil)
   (bind-keys :map cider-repl-mode-map
              ("C-c M-o" . cider-repl-clear-buffer)))
 
