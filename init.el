@@ -151,6 +151,100 @@
   (dolist (mode '(cider-mode cider-repl-mode))
     (add-to-list 'ac-modes mode)))
 
+(use-package etags)
+
+(use-package arc-mode)
+
+(defun inf-clojure-connect (&optional port name)
+  "Connect to socket repl at PORT using NAME for the buffer.
+
+The REPL can be started like this:
+
+  java java -Dclojure.server.repl=\"{:port 5555 :accept clojure.core.server/repl}\" -jar clojure.jar"
+  (interactive)
+  (with-current-buffer
+      (make-comint-in-buffer (or name "inf-clojure")
+                             nil (cons "localhost" (or port 5555)))
+    (inf-clojure-mode)
+    (pop-to-buffer (current-buffer))))
+
+(defun inf-clojure-find-file (url)
+  "Opens the URL in a buffer.  Based on cider-common.el."
+  (cond ((string-match "^file:\\(.+\\)" url)
+         (find-file-noselect (match-string 1 url)))
+
+        ((string-match "^\\(jar\\):file:\\(.+\\)!/\\(.+\\)" url)
+         (let* ((entry (match-string 3 url))
+                (path  (match-string 2 url))
+                (name  (format "%s:%s" path entry)))
+           (or (find-buffer-visiting name)
+               (progn
+                 (find-file path)
+                 (goto-char (point-min))
+                 (search-forward (concat entry "\n"))
+                 (forward-line -1)
+                 (archive-extract)
+                 (current-buffer)))))))
+
+(defvar inf-clojure-navigate-command
+  "(when-let [m (meta (resolve '%s))]
+     (require 'clojure.java.io)
+     (->> (-> (select-keys m [:file :line :column :name :ns])
+              (update :ns (comp symbol str))
+              (update :file (comp str (resolve 'clojure.java.io/resource))))
+          (sort-by key)
+          flatten))\n")
+
+(defun inf-clojure-navigate ()
+  "Try navigate to the symbol at point and open it up in another window."
+  (interactive)
+  (make-local-variable 'thing-at-point-file-name-chars)
+  (setq thing-at-point-file-name-chars "-[:alnum:]_.:/*<>")
+
+  (let* ((symbol (or (thing-at-point 'filename) ""))
+         (proc (inf-clojure-proc))
+         (comint-filt (process-filter proc))
+         (kept "")
+         var-info)
+
+    (when symbol
+      (set-process-filter proc (lambda (_proc string)
+                                 (setq kept (concat kept string))))
+      (unwind-protect
+          (let ((snippet (format inf-clojure-navigate-command symbol)))
+            (process-send-string proc snippet)
+            (while (and (not (string-match inf-clojure-prompt kept))
+                        (accept-process-output proc 2)))
+            (setq var-info (and (string-match "(.+)" kept) (match-string 0 kept))))
+        (set-process-filter proc comint-filt))
+
+      (when var-info
+        (let* ((result (read var-info))
+               (file (nth 3 result))
+               (line (nth 5 result)))
+
+          (if (and (stringp file) (numberp line))
+              (progn
+                (ring-insert find-tag-marker-ring (point-marker))
+                (with-current-buffer (inf-clojure-find-file file)
+                  (goto-char (point-min))
+                  (forward-line (1- line))
+                  (pop-to-buffer-same-window (current-buffer)
+                                             '((display-buffer-reuse-window display-buffer-same-window)))))
+
+            (message (format "Don't know how to find '%s'" (symbol-name symbol)))))))))
+
+(use-package inf-clojure
+  :config
+  (dolist (minor-mode '(eldoc-mode paredit-mode))
+    (add-hook 'inf-clojure-mode-hook minor-mode))
+
+  (dolist (map (list inf-clojure-minor-mode-map
+                     inf-clojure-mode-map))
+    (bind-keys :map map
+               ("M-." . inf-clojure-navigate)
+               ("M-," . pop-tag-mark))))
+
 (defun init/go-get (package)
   "Use `go get' to install Go package PACKAGE."
   (call-process "go" nil nil nil "get" package))
