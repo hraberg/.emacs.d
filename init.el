@@ -175,7 +175,7 @@
 
 The REPL can be started like this:
 
-  java java -Dclojure.server.repl=\"{:port 5555 :accept clojure.core.server/repl}\" -jar clojure.jar"
+  java -Dclojure.server.repl=\"{:port 5555 :accept clojure.core.server/repl}\" -jar clojure.jar"
   (interactive)
   (with-current-buffer
       (make-comint-in-buffer (or name "inf-clojure")
