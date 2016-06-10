@@ -86,6 +86,9 @@
                 (ac-flyspell-workaround)))
   (setq ac-auto-start nil))
 
+(use-package ac-capf
+  :config (ac-capf-setup))
+
 (use-package paredit
   :diminish paredit-mode
   :config
@@ -155,6 +158,18 @@
 
 (use-package arc-mode)
 
+(use-package inf-clojure
+  :config
+  (dolist (minor-mode '(eldoc-mode paredit-mode ac-capf-setup))
+    (add-hook 'inf-clojure-mode-hook minor-mode)
+    (add-hook 'inf-clojure-minor-mode-hook minor-mode))
+
+  (dolist (map (list inf-clojure-minor-mode-map
+                     inf-clojure-mode-map))
+    (bind-keys :map map
+               ("M-." . inf-clojure-navigate)
+               ("M-," . pop-tag-mark))))
+
 (defun inf-clojure-connect (&optional port name)
   "Connect to socket repl at PORT using NAME for the buffer.
 
@@ -166,7 +181,10 @@ The REPL can be started like this:
       (make-comint-in-buffer (or name "inf-clojure")
                              nil (cons "localhost" (or port 5555)))
     (inf-clojure-mode)
-    (pop-to-buffer (current-buffer))))
+    (process-send-string (inf-clojure-proc)
+                         "(try (require 'complete.core) (catch Exception _))\n")
+    (setq inf-clojure-buffer (current-buffer))
+    (pop-to-buffer-same-window (current-buffer))))
 
 (defun inf-clojure-find-file (url)
   "Opens the URL in a buffer.  Based on cider-common.el."
@@ -227,23 +245,13 @@ The REPL can be started like this:
               (progn
                 (ring-insert find-tag-marker-ring (point-marker))
                 (with-current-buffer (inf-clojure-find-file file)
+                  (inf-clojure-minor-mode)
                   (goto-char (point-min))
                   (forward-line (1- line))
                   (pop-to-buffer-same-window (current-buffer)
                                              '((display-buffer-reuse-window display-buffer-same-window)))))
 
             (message (format "Don't know how to find '%s'" (symbol-name symbol)))))))))
-
-(use-package inf-clojure
-  :config
-  (dolist (minor-mode '(eldoc-mode paredit-mode))
-    (add-hook 'inf-clojure-mode-hook minor-mode))
-
-  (dolist (map (list inf-clojure-minor-mode-map
-                     inf-clojure-mode-map))
-    (bind-keys :map map
-               ("M-." . inf-clojure-navigate)
-               ("M-," . pop-tag-mark))))
 
 (defun init/go-get (package)
   "Use `go get' to install Go package PACKAGE."
