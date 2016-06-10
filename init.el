@@ -214,7 +214,7 @@ The REPL can be started like this:
           flatten))\n")
 
 (defun inf-clojure-navigate ()
-  "Try navigate to the symbol at point and open it up in another window."
+  "Try navigate to the symbol at point and open it up in the same window."
   (interactive)
   (make-local-variable 'thing-at-point-file-name-chars)
   (setq thing-at-point-file-name-chars "-[:alnum:]_.:/*<>")
