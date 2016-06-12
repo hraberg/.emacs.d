@@ -160,7 +160,7 @@
 
 (use-package inf-clojure
   :config
-  (dolist (minor-mode '(eldoc-mode paredit-mode ac-capf-setup))
+  (dolist (minor-mode '(eldoc-mode paredit-mode auto-complete-mode ac-capf-setup))
     (add-hook 'inf-clojure-mode-hook minor-mode)
     (add-hook 'inf-clojure-minor-mode-hook minor-mode))
 
@@ -170,16 +170,28 @@
                ("M-." . inf-clojure-navigate)
                ("M-," . pop-tag-mark))))
 
-(defun inf-clojure-connect (&optional port name)
-  "Connect to socket repl at PORT using NAME for the buffer.
+(defvar inf-clojure-connect-host-history (list "127.0.0.1"))
+(defvar inf-clojure-connect-port-history (list "5555"))
+
+(defun inf-clojure-connect (&optional host port name interactive-p)
+  "Connect to socket repl on HOST at PORT using NAME for the buffer.
+INTERACTIVE-P will be is set if called as a command.
 
 The REPL can be started like this:
 
   java -Dclojure.server.repl=\"{:port 5555 :accept clojure.core.server/repl}\" -jar clojure.jar"
-  (interactive)
+  (interactive (list (read-from-minibuffer
+                      "Host: " (first inf-clojure-connect-host-history)
+                      nil nil '(inf-clojure-connect-host-history . 1))
+                     (string-to-number
+                      (read-from-minibuffer
+                       "Port: " (first inf-clojure-connect-port-history)
+                       nil nil '(inf-clojure-connect-port-history . 1)))
+                     nil t))
   (with-current-buffer
       (make-comint-in-buffer (or name "inf-clojure")
-                             nil (cons "localhost" (or port 5555)))
+                             nil (cons (or host "127.0.0.1")
+                                       (or port 5555)))
     (inf-clojure-mode)
     (process-send-string (inf-clojure-proc)
                          "(try (require 'complete.core) (catch Exception _))\n")
