@@ -167,8 +167,9 @@
   (dolist (map (list inf-clojure-minor-mode-map
                      inf-clojure-mode-map))
     (bind-keys :map map
-               ("M-." . inf-clojure-navigate)
-               ("M-," . pop-tag-mark))))
+               ("M-." . inf-clojure-find-var)
+               ("M-," . pop-tag-mark)
+               ("C-c C-k" . inf-clojure-load-buffer))))
 
 (defvar inf-clojure-connect-host-history (list "127.0.0.1"))
 (defvar inf-clojure-connect-port-history (list "5555"))
@@ -216,7 +217,7 @@ The REPL can be started like this:
                  (archive-extract)
                  (current-buffer)))))))
 
-(defvar inf-clojure-navigate-command
+(defvar inf-clojure-find-var-command
   "(when-let [m (meta (resolve '%s))]
      (require 'clojure.java.io)
      (->> (-> (select-keys m [:file :line :column :name :ns])
@@ -225,11 +226,11 @@ The REPL can be started like this:
           (sort-by key)
           flatten))\n")
 
-(defun inf-clojure-navigate ()
+(defun inf-clojure-find-var ()
   "Try navigate to the symbol at point and open it up in the same window."
   (interactive)
   (make-local-variable 'thing-at-point-file-name-chars)
-  (setq thing-at-point-file-name-chars "-[:alnum:]_.:/*<>")
+  (setq thing-at-point-file-name-chars "-[:alnum:]_.:/*<>?!")
 
   (let* ((symbol (or (thing-at-point 'filename) ""))
          (proc (inf-clojure-proc))
@@ -241,7 +242,7 @@ The REPL can be started like this:
       (set-process-filter proc (lambda (_proc string)
                                  (setq kept (concat kept string))))
       (unwind-protect
-          (let ((snippet (format inf-clojure-navigate-command symbol)))
+          (let ((snippet (format inf-clojure-find-var-command symbol)))
             (process-send-string proc snippet)
             (while (and (not (string-match inf-clojure-prompt kept))
                         (accept-process-output proc 2)))
@@ -264,6 +265,16 @@ The REPL can be started like this:
                                              '((display-buffer-reuse-window display-buffer-same-window)))))
 
             (message (format "Don't know how to find '%s'" (symbol-name symbol)))))))))
+
+(defun inf-clojure-load-buffer ()
+  "Load the current buffer into the REPL."
+  (interactive)
+  (let ((file-name (buffer-file-name)))
+    (comint-check-source file-name)
+    (setq inf-clojure-prev-l/c-dir/file (cons (file-name-directory    file-name)
+                                              (file-name-nondirectory file-name)))
+    (comint-send-string (inf-clojure-proc)
+                        (format inf-clojure-load-command file-name))))
 
 (defun init/go-get (package)
   "Use `go get' to install Go package PACKAGE."
