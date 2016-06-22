@@ -65,6 +65,12 @@
 (use-package asm-mode
   :config (setq asm-comment-char ?#))
 
+(use-package time
+  :config
+  (setq display-time-24hr-format t)
+  (setq display-time-load-average nil)
+  (display-time-mode))
+
 (use-package better-defaults
   :config (setq visible-bell nil))
 
