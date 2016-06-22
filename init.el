@@ -68,7 +68,7 @@
 (use-package time
   :config
   (setq display-time-24hr-format t)
-  (setq display-time-load-average nil)
+  (setq display-time-default-load-average nil)
   (display-time-mode))
 
 (use-package better-defaults
