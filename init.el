@@ -193,6 +193,18 @@
   :defer t
   :init (init/go-get "github.com/nsf/gocode"))
 
+(use-package haskell-mode
+  :init (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
+  :config
+  (bind-keys :map haskell-mode-map
+             ("M-," . pop-tag-mark)))
+
+(use-package ac-haskell-process
+  :config
+  (add-hook 'interactive-haskell-mode-hook 'ac-haskell-process-setup)
+  (add-hook 'haskell-interactive-mode-hook 'ac-haskell-process-setup)
+  (add-to-list 'ac-modes 'haskell-interactive-mode))
+
 (use-package markdown-mode
   :mode ("\\.markdown\\'"
          "\\.md\\'"
